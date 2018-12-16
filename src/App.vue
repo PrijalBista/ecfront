@@ -1,60 +1,46 @@
 <template>
-  <div id="app">
-    <img src="./assets/logo.png">
-    <h1>{{ msg }}</h1>
-    <h2>Essential Links</h2>
-    <ul>
-      <li><a href="https://vuejs.org" target="_blank">Core Docs</a></li>
-      <li><a href="https://forum.vuejs.org" target="_blank">Forum</a></li>
-      <li><a href="https://chat.vuejs.org" target="_blank">Community Chat</a></li>
-      <li><a href="https://twitter.com/vuejs" target="_blank">Twitter</a></li>
-    </ul>
-    <h2>Ecosystem</h2>
-    <ul>
-      <li><a href="http://router.vuejs.org/" target="_blank">vue-router</a></li>
-      <li><a href="http://vuex.vuejs.org/" target="_blank">vuex</a></li>
-      <li><a href="http://vue-loader.vuejs.org/" target="_blank">vue-loader</a></li>
-      <li><a href="https://github.com/vuejs/awesome-vue" target="_blank">awesome-vue</a></li>
-    </ul>
+  <div>
+
+    {{$store.getters.isAuth}}
+
+    <div v-if="!$store.getters.isAuth">
+        <input type="text" name="email" v-model="auth.username">
+        <input type="text" name="password" v-model="auth.password">
+        <button @click="login">Login</button>
+    </div>
+        
+    <div v-if="$store.getters.isAuth">
+      {{$store.getters.getAuthUser}}
+      <button @click="logout">Logout</button>
+    </div>  
+
   </div>
 </template>
 
 <script>
+
 export default {
-  name: 'app',
-  data () {
+  data() {
     return {
-      msg: 'Welcome to Your Vue.js App'
+        auth:{
+            client_id: 2,
+            client_secret: '6qiLMwAqfBZUS4Mo82G7HqUe3fccSXuwUSOVL2RJ',
+            grant_type: 'password',
+            username: "kuhn.lesly@example.com",
+            password: "secret",
+        }
+    }
+  },
+
+  methods:{
+    login(){
+        this.$store.dispatch('asyncSetAuthUser', this.auth);
+    },
+
+    logout(){
+        this.$store.dispatch('asyncUnsetAuthUser');
     }
   }
-}
+};
 </script>
 
-<style>
-#app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
-
-h1, h2 {
-  font-weight: normal;
-}
-
-ul {
-  list-style-type: none;
-  padding: 0;
-}
-
-li {
-  display: inline-block;
-  margin: 0 10px;
-}
-
-a {
-  color: #42b983;
-}
-</style>
