@@ -24,10 +24,11 @@ export default {
     return {
         auth:{
             client_id: 2,
-            client_secret: '6qiLMwAqfBZUS4Mo82G7HqUe3fccSXuwUSOVL2RJ',
+            client_secret: 'lfSNsQpVDMcf5sugWkG6GaINVTZ3M7PsxiAQhhcY',
             grant_type: 'password',
-            username: "kuhn.lesly@example.com",
+            username: "judah05@example.net",
             password: "secret",
+            scope: "place-orders"
         }
     }
   },
