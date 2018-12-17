@@ -24,8 +24,8 @@
 						<div class="details col-md-6">
 							<h3 class="product-title">{{product.name}}</h3>
 							<div class="rating">
-								<div class="stars">
-									<span class="fa fa-star checked" v-for="(n,i) in Math.floor(product.rating) | 0"></span>
+								<div class="stars" v-if="!isloading">
+									<span class="fa fa-star checked" v-for="(n,i) in Math.floor(product.rating)|0"></span>
 									<span v-if="Math.floor(product.rating)<product.rating" class="fa fa-star-half-o checked"></span>
 									<span v-for="(n,i) in Math.floor(5-product.rating)" class="fa fa-star"></span>
 									<p>{{ product.rating }}</p>
@@ -46,8 +46,10 @@
 								<span class="color green"></span>
 								<span class="color blue"></span>
 							</h5> -->
+              <p><input type="number" name="qty" v-model="qty"min=0 :max="product.quantity"/></p>
 							<div class="action">
-								<button class="add-to-cart btn btn-default" type="button">add to cart</button>
+
+								<button class="add-to-cart btn btn-default" type="button" @click="addToCart(product.id,qty)">add to cart</button>
 								<button class="like btn btn-default" type="button"><span class="fa fa-heart"></span></button>
 							</div>
 						</div>
@@ -72,7 +74,8 @@
 		data(){
 			return {
 				product:{},
-				isloading:true,		
+				isloading:true,
+        qty:0,		
 			}
 		},
 		created(){
@@ -90,6 +93,9 @@
 					})
 					.catch(err=>console.log(err));
 			},
+      addToCart(productId,qty){
+        this.$store.dispatch('addProductToCart',{'productId':productId,'qty':parseInt(qty)});
+      }
 		}	
 	}
 </script>

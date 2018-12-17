@@ -7,8 +7,8 @@
 	                <img class="pic-2" :src="'https://picsum.photos/255/326?image='+product.id">
 	           	</router-link>
 	            <ul class="social">
-	                <li><a href="#"><i class="fa fa-shopping-bag"></i></a></li>
-	                <li><a href="#"><i class="fa fa-shopping-cart"></i></a></li>
+	                <li><a ><i class="fa fa-shopping-bag"></i></a></li>
+	                <li><a  @click="addToCart(product.id,1)"><i class="fa fa-shopping-cart"></i></a></li>
 	            </ul>
 	            <!-- <span class="product-new-label">New</span> -->
 	        </div>
@@ -28,7 +28,12 @@
 </template>
 <script>
 	export default{
-		props:['product']
+		props:['product'],
+		methods:{
+			addToCart(productId,qty){
+				this.$store.dispatch('addProductToCart',{'productId':productId,'qty':qty});
+			}
+		}
 	}
 </script>
 
