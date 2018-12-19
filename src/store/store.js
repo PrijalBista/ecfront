@@ -57,7 +57,7 @@ export const store = new Vuex.Store({
 		},
 
 		asyncUnsetAuthUser(context){
-			Vue.axios.get('/api/logout', {
+			Vue.axios.get('api/logout', {
 				headers:{
 					'Authorization': 'Bearer ' + Vue.auth.getToken()
 				}

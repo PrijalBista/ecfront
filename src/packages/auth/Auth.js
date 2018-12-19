@@ -27,7 +27,6 @@ export default function(Vue){
 		},
 
 		destroyToken(){
-			console.log('destroyToken');
 			localStorage.removeItem('access_token');
 			localStorage.removeItem('expires_in');
 		}

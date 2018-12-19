@@ -4,11 +4,16 @@
     {{$store.getters.isAuth}}
 
     <div v-if="!$store.getters.isAuth">
+      <app-register :callback="login"/>
+    </div>
+
+    <br>
+
+    <div v-if="!$store.getters.isAuth">
         <input type="text" name="email" v-model="auth.username">
         <input type="text" name="password" v-model="auth.password">
-        <button @click="login">Login</button>
+        <button @click="login(null)">Login</button>
     </div>
-        
     <div v-if="$store.getters.isAuth">
       {{$store.getters.getAuthUser}}
       <button @click="logout">Logout</button>
@@ -18,8 +23,10 @@
 </template>
 
 <script>
+import Register from './Register.vue';
 
 export default {
+
   data() {
     return {
         auth:{
@@ -33,13 +40,21 @@ export default {
   },
 
   methods:{
-    login(){
+    login(registerInfo){
+        if(registerInfo !=null){
+            this.auth.username = registerInfo.email;
+            this.auth.password = registerInfo.password;        
+        }
         this.$store.dispatch('asyncSetAuthUser', this.auth);
     },
 
     logout(){
         this.$store.dispatch('asyncUnsetAuthUser');
     }
+  },
+
+  components:{
+      appRegister: Register
   }
 };
 </script>
