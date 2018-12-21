@@ -1,10 +1,12 @@
 <template>
-	<div>
-        <h4>Error Appears Here</h4>
-        <p>{{error}}</p>
-        <input type="text" name="email" v-model="auth.username">
-        <input type="text" name="password" v-model="auth.password">
-        <button @click="login(null)">Login</button>
+	<div v-if="!$store.getters.isAuth">
+		<h2>Login.vue</h2>
+        <p>Errors: {{error}}</p>
+        <form>
+	        <input type="text" name="email" v-model="auth.username">
+	        <input type="text" name="password" v-model="auth.password">
+	        <button type="submit" @click.prevent="login(null)">Login</button>
+	    </form>    
 	</div>
 </template>
 

@@ -1,9 +1,11 @@
 <template>
-	<div>
-		<h4>Error/Message Appears Here</h4>
-    	<p>{{error}} {{message}}</p>
-		<input type="email" name="email" v-model="userEmail.email">
-		<button @click="sendPasswordResetLink">Send Password Reset Link</button>
+	<div v-if="!$store.getters.isAuth">
+		<h2>ForgotPassword.vue</h2>
+    	<p>Errors/Messages: {{error}} {{message}}</p>
+    	<form>
+			<input type="email" name="email" v-model="userEmail.email">
+			<button type="submit" @click.prevent="sendPasswordResetLink">Send Password Reset Link</button>
+		</form>
 	</div>
 </template>
 

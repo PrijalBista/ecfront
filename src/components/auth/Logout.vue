@@ -1,5 +1,6 @@
 <template>
-	<div>
+	<div v-if="$store.getters.isAuth">
+		<h2>Logout.vue</h2>
     	{{$store.getters.getAuthUser}}
       	<button @click="logout">Logout</button>
 	</div>

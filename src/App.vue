@@ -1,33 +1,27 @@
 <template>
   <div>
 
-    <h4>isAuth : {{$store.getters.isAuth}}</h4>
+	<h4>isAuth : {{$store.getters.isAuth}}</h4>
 
-    <h4>isLoading : {{isLoading}}</h4>
+	<h4>isLoading : {{isLoading}}</h4>
 
-    <div v-if="!$store.getters.isAuth">
-      <app-register/>
-      <br>
-      <app-forgot-password/>
-      <br>
-      <app-reset-password/>
-    </div>
+	<ul>
+		<li v-if="!$store.getters.isAuth"><router-link to="/password/reset">Forgot Password</router-link></li>
+	</ul>
 
-    <div v-if="!$store.getters.isAuth">
-        <app-login/>
-    </div>
+	<hr>
+	<router-view/><hr>
+	<app-register/><hr>
+	<app-login/><hr>
+	<app-logout/>
+	<hr>
 
-    <div v-if="$store.getters.isAuth">
-        <app-logout/>
-    </div>  
 
   </div>
 </template>
 
 <script>
 import Register from './components/auth/Register.vue';
-import ForgotPassword from './components/auth/ForgotPassword.vue';
-import ResetPassword from './components/auth/ResetPassword.vue'
 import Login from './components/auth/Login.vue';
 import Logout from './components/auth/Logout.vue';
 
@@ -35,25 +29,23 @@ import {eventBus} from './main.js'
 
 export default {
 
-    created(){
-        eventBus.$on('showError', (e)=>{
-            this.error = e;
-        })
-    },
+	created(){
+		eventBus.$on('showError', (e)=>{
+			this.error = e;
+		})
+	},
 
-    computed: {
-        isLoading(){
-            return this.$store.getters.isLoading;
-        }
-    },
+	computed: {
+		isLoading(){
+			return this.$store.getters.isLoading;
+		}
+	},
 
-    components:{
-        appRegister: Register,
-        appForgotPassword: ForgotPassword,
-        appLogin : Login,
-        appLogout : Logout,
-        appResetPassword: ResetPassword
-    }
+	components:{
+		appRegister: Register,
+		appLogin : Login,
+		appLogout : Logout,
+	}
 };
 </script>
 
