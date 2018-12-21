@@ -1,5 +1,7 @@
 <template>
 	<div>
+		<h4>Error Appears Here</h4>
+    	<p>{{error}}</p>
 		<input type="text" name="name" v-model="registerInfo.name" placeholder="Name">
 		<input type="email" name="email" v-model="registerInfo.email" placeholder="example@domain.com">
 		<input type="password" name="password" v-model="registerInfo.password" placeholder="Password">
@@ -9,11 +11,15 @@
 </template>
 
 <script>
-	export default{
+	import {eventBus} from './../../main.js'
 
-		props:{
-			callback: Function
-		},
+	export default{
+		
+		created(){
+	        eventBus.$on('showError', (e)=>{
+	            this.error = e;
+	        });
+	    },
 
 		data(){
 			return {
@@ -21,21 +27,15 @@
 					name: "Lorem Ipsum",
 					email: "lorem@ipsum.com",
 					password: "loremipsum",
-					password_confirmation: "loremipsum"
-				}
+					password_confirmation: "loremipsum",
+				},
+				error: "",
 			}
 		},
 
 		methods:{
 			register(){
-				this.$axios.post("api/register", this.registerInfo)
-					.then(res=>{
-						if(res.data.message == 'success'){
-							this.callback(this.registerInfo);
-						}
-					}, err=>{
-						console.log(err);
-					})
+				this.$store.dispatch('asyncRegisterUser', this.registerInfo);
 			}
 		}
 	};

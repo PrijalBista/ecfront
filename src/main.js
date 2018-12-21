@@ -15,8 +15,24 @@ import {store} from './store/store'
 Vue.use(Axios);
 Vue.use(Auth);
 
+export const eventBus = new Vue({
+	methods:{
+		showError(error){
+			this.$emit('showError', error);
+		},
+		showMessage(message){
+			this.$emit('showMessage', message);
+		},
+		loginAfterRegister(newUserInfo){
+			this.$emit('loginAfterRegister', newUserInfo);
+		}
+	}
+});
+
 new Vue({
   el: '#app',
   store,
   render: h => h(App)
 })
+
+
