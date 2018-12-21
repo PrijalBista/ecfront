@@ -4,12 +4,13 @@ import VueRouter from 'vue-router'
 import App from './App.vue'
 import Products from './Components/Products.vue'
 import ProductDetail from './Components/ProductDetail.vue'
-
+import Carts from './Components/Carts.vue'
 Vue.use(VueRouter)
 
 const routes=[
 	{path:'/',component:Products},
-	{path:'/product/:id',component:ProductDetail}
+	{path:'/product/:id',component:ProductDetail},
+  {path:'/carts',component:Carts},
 ]
 
 const router=new VueRouter({routes, mode:'history'})

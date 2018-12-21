@@ -47,9 +47,10 @@
 								<span class="color blue"></span>
 							</h5> -->
               <p><input type="number" name="qty" v-model="qty"min=0 :max="product.quantity"/></p>
+              <p v-if="qty>product.quantity" class="alert alert-danger">Cannot add more than available in stock</p>
 							<div class="action">
 
-								<button class="add-to-cart btn btn-default" type="button" @click="addToCart(product.id,qty)">add to cart</button>
+								<button class="add-to-cart btn btn-default" type="button" @click="addToCart(product,qty)">add to cart</button>
 								<button class="like btn btn-default" type="button"><span class="fa fa-heart"></span></button>
 							</div>
 						</div>
@@ -93,8 +94,10 @@
 					})
 					.catch(err=>console.log(err));
 			},
-      addToCart(productId,qty){
-        this.$store.dispatch('addProductToCart',{'productId':productId,'qty':parseInt(qty)});
+      addToCart(product,qty){
+        if(product.quantity>=qty){
+          this.$store.dispatch('addProductToCart',{'productId':product.id,'qty':parseInt(qty),'maxQty':product.quantity,'price':product.price,'name':product.name});
+        }
       }
 		}	
 	}

@@ -8,7 +8,7 @@
 	           	</router-link>
 	            <ul class="social">
 	                <li><a ><i class="fa fa-shopping-bag"></i></a></li>
-	                <li><a  @click="addToCart(product.id,1)"><i class="fa fa-shopping-cart"></i></a></li>
+	                <li><a  @click="addToCart(product,1)"><i class="fa fa-shopping-cart"></i></a></li>
 	            </ul>
 	            <!-- <span class="product-new-label">New</span> -->
 	        </div>
@@ -30,8 +30,8 @@
 	export default{
 		props:['product'],
 		methods:{
-			addToCart(productId,qty){
-				this.$store.dispatch('addProductToCart',{'productId':productId,'qty':qty});
+			addToCart(product,qty){
+				this.$store.dispatch('addProductToCart',{'productId':product.id,'qty':parseInt(qty),'maxQty':product.quantity,'price':product.price,'name':product.name});
 			}
 		}
 	}

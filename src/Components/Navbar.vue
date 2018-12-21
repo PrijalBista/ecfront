@@ -1,5 +1,5 @@
 <template>
-	<nav class="navbar navbar-expand-sm navbar-light bg-light  mb-2 ">
+	<nav class="navbar fixed-top navbar-expand-sm navbar-light bg-light  mb-2 ">
 		<div class="container">
 			<a href="#" class="navbar-brand">Ecommerce</a>
 			<form class="form-inline">
@@ -22,7 +22,7 @@
 		},
 		methods:{
 			logCart(){
-
+				this.$router.push('/carts');
 				console.log(JSON.stringify(this.$store.getters.getCart));
 			},
 			clearCart(){
