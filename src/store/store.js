@@ -1,6 +1,7 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
 import VuexPersistence from 'vuex-persist'
+import {eventBus} from './../main.js'
 
 Vue.use(Vuex);
 
@@ -10,7 +11,8 @@ export const store = new Vuex.Store({
 		authUser:{},
 		cart:[],
 		prodCount:0,
-		wishlist:[{}]
+		wishlist:[],
+		loading: false
 	},
 
 	plugins: [new VuexPersistence().plugin],
@@ -34,6 +36,10 @@ export const store = new Vuex.Store({
 
 		getprodCount:(state)=>{
 			return state.prodCount;
+		},
+
+		isLoading: (state)=>{
+			return state.loading;
 		}
 	},
 
@@ -71,11 +77,20 @@ export const store = new Vuex.Store({
 
 		addProductToWishlist(state,payload){
 			state.wishlist.push(payload);
+		},
+
+		setLoading(state){
+			state.loading = true;
+		},
+
+		unsetLoading(state){
+			state.loading = false;
 		}
 	},
 
 	actions:{
 		asyncSetAuthUser(context, payload){
+			context.commit('setLoading');
 			Vue.axios.post('oauth/token', payload).
 		        then(res=>{
 		            Vue.auth.setToken(res.data.access_token, res.data.expires_in);
@@ -87,23 +102,41 @@ export const store = new Vuex.Store({
 					}).then(res=>{
 						context.commit('setAuthUser', res.data);
 					}, err=>{
-						console.log(err);
+						eventBus.showError(err.response.data);
 					});
 
 		        }, err=>{
-		            console.log(err);
-	        	});
+		            eventBus.showError(err.response.data);
+	        	}).then(()=>{
+					context.commit('unsetLoading');
+				});
 		},
 
 		asyncUnsetAuthUser(context){
-			Vue.axios.get('/api/logout', {
+			context.commit('setLoading');
+			Vue.axios.get('api/logout', {
 				headers:{
 					'Authorization': 'Bearer ' + Vue.auth.getToken()
 				}
 			}).then(res=>{
 				context.commit('unsetAuthUser');
 			}, err=>{
-				console.log(err);
+				eventBus.showError(err.response.data);
+			}).then(()=>{
+				context.commit('unsetLoading');
+			});
+		},
+
+		asyncRegisterUser(context, payload){
+			context.commit('setLoading');
+			Vue.axios.post("api/register", payload)
+			.then(res=>{
+				if(res.data.message == 'success'){
+					eventBus.loginAfterRegister(payload);
+				}
+			}, err=>{
+				eventBus.showError(err.response.data);
+				context.commit('unsetLoading');
 			})
 		},
 
@@ -117,6 +150,30 @@ export const store = new Vuex.Store({
 
 		addProductToWishlist(context,payload){
 			context.commit('addProductToWishlist',payload);
+		},
+
+		asyncSendPasswordResetLink(context, payload){
+			context.commit('setLoading');
+			Vue.axios.post('api/password/email', payload)
+			.then(res=>{
+				eventBus.showMessage(res.data.status);
+			},err=>{
+				eventBus.showError(err.data.status);
+			}).then(()=>{
+				context.commit('unsetLoading');
+			});
+		},
+
+		asyncResetPassword(context, payload){
+			context.commit('setLoading');
+			Vue.axios.post('api/password/reset', payload)
+			.then(res=>{
+				eventBus.showMessage(res.data.status);
+			},err=>{
+				eventBus.showError(err.data.status);
+			}).then(()=>{
+				context.commit('unsetLoading');
+			});
 		},
 	}
 

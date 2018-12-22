@@ -2,36 +2,62 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 
 import App from './App.vue'
-import Products from './Components/Products.vue'
-import ProductDetail from './Components/ProductDetail.vue'
-import Carts from './Components/Carts.vue'
-Vue.use(VueRouter)
-
-const routes=[
-	{path:'/',component:Products},
-	{path:'/product/:id',component:ProductDetail},
-  {path:'/carts',component:Carts},
-]
-
-const router=new VueRouter({routes, mode:'history'})
 
 import Auth from './packages/auth/Auth'
 import Axios from './packages/axios/Axios'
-import {store} from './store/store'
 
-/*
-    this.$store.dispatch('asyncSetAuthUser', this.auth); this.auth : { client_id: 2, client_secret.....}
-    this.$store.dispatch('asyncUnsetAuthUser');
-    this.$store.getters.isAuth
-    this.$store.getters.getAuthUser
-*/
+import {store} from './store/store'
+import {routes} from './routes'
 
 Vue.use(Axios);
 Vue.use(Auth);
+Vue.use(VueRouter);
+
+export const eventBus = new Vue({
+	methods:{
+		showError(error){
+			this.$emit('showError', error);
+		},
+		showMessage(message){
+			this.$emit('showMessage', message);
+		},
+		loginAfterRegister(newUserInfo){
+			this.$emit('loginAfterRegister', newUserInfo);
+		}
+	}
+});
+
+const router = new VueRouter({
+	mode: 'history',
+	routes
+});
+
+router.beforeEach((to, from, next) => {
+	if(to.meta.requiresAuth == false){			// eg: Cart
+		next();
+	}else if(to.meta.forAuth == false){			// eg: Forgot Password, Reset Password
+		if(Vue.auth.isAuth() == false){
+			next();
+		}else{
+			next('/');
+		}
+	}
+	else if(to.meta.requiresAuth == true){		// eg: Order
+		if(Vue.auth.isAuth() == true){
+			next();
+		}else{
+			next('/account');
+		}
+	}
+	next();
+});
 
 new Vue({
   el: '#app',
   router,
   store,
+  router,
   render: h => h(App)
 })
+
+
