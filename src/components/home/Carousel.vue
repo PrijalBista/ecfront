@@ -2,7 +2,7 @@
   <!-- Start slider -->
   <section id="aa-slider">
     <div class="aa-slider-area">
-      <div id="sequence" class="seq">
+      <div id="sequence" class="seq" ref="sequence">
         <div class="seq-screen">
           <ul class="seq-canvas">
             <!-- single slide item -->
@@ -80,6 +80,22 @@
 
 <script>
     export default {
+
+    	mounted(){
+    		// Get the Sequence element
+			let sequenceElement = this.$refs.sequence;
+    		// Place your Sequence options here to override defaults
+			// See: http://sequencejs.com/documentation/#options
+    		let options = {
+			  animateCanvas: false,
+			  phaseThreshold: false,
+			  preloader: true,
+			  reverseWhenNavigatingBackwards: true
+			}
+
+			// Launch Sequence on the element, and with the options we specified above
+			var mySequence = sequence(sequenceElement, options);
+    	}
         
     };
 </script>
