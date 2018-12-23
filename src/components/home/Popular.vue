@@ -18,14 +18,14 @@
                 <div class="tab-pane fade in active" id="popular">
                     <ul class="aa-product-catg aa-popular-slider">
                         <!-- start single product item -->
-                        <li><app-item :item="item"/></li>   
-                        <li><app-item :item="item"/></li>
-                        <li><app-item :item="item"/></li>
-                        <li><app-item :item="item"/></li>
-                        <li><app-item :item="item"/></li>
-                        <li><app-item :item="item"/></li>
-                        <li><app-item :item="item"/></li>
-                        <li><app-item :item="item"/></li>
+                        <li><app-product :item="item"/></li>   
+                        <li><app-product :item="item"/></li>
+                        <li><app-product :item="item"/></li>
+                        <li><app-product :item="item"/></li>
+                        <li><app-product :item="item"/></li>
+                        <li><app-product :item="item"/></li>
+                        <li><app-product :item="item"/></li>
+                        <li><app-product :item="item"/></li>
                     </ul>
                   <a class="aa-browse-btn" href="#">Browse all Product <span class="fa fa-long-arrow-right"></span></a>
                 </div>
@@ -35,14 +35,14 @@
                 <div class="tab-pane fade" id="featured">
                  <ul class="aa-product-catg aa-featured-slider">
                     <!-- start single product item -->
-                    <li><app-item :item="item"/></li>
-                    <li><app-item :item="item"/></li>
-                    <li><app-item :item="item"/></li>
-                    <li><app-item :item="item"/></li>
-                    <li><app-item :item="item"/></li>
-                    <li><app-item :item="item"/></li>
-                    <li><app-item :item="item"/></li>
-                    <li><app-item :item="item"/></li>                                                     
+                    <li><app-product :item="item"/></li>
+                    <li><app-product :item="item"/></li>
+                    <li><app-product :item="item"/></li>
+                    <li><app-product :item="item"/></li>
+                    <li><app-product :item="item"/></li>
+                    <li><app-product :item="item"/></li>
+                    <li><app-product :item="item"/></li>
+                    <li><app-product :item="item"/></li>                                                     
                   </ul>
                   <a class="aa-browse-btn" href="#">Browse all Product <span class="fa fa-long-arrow-right"></span></a>
                 </div>
@@ -52,14 +52,14 @@
                 <div class="tab-pane fade" id="latest">
                   <ul class="aa-product-catg aa-latest-slider">
                     <!-- start single product item -->
-                    <li><app-item :item="item"/></li>
-                    <li><app-item :item="item"/></li>
-                    <li><app-item :item="item"/></li>
-                    <li><app-item :item="item"/></li>
-                    <li><app-item :item="item"/></li>
-                    <li><app-item :item="item"/></li>
-                    <li><app-item :item="item"/></li>
-                    <li><app-item :item="item"/></li>                                                                
+                    <li><app-product :item="item"/></li>
+                    <li><app-product :item="item"/></li>
+                    <li><app-product :item="item"/></li>
+                    <li><app-product :item="item"/></li>
+                    <li><app-product :item="item"/></li>
+                    <li><app-product :item="item"/></li>
+                    <li><app-product :item="item"/></li>
+                    <li><app-product :item="item"/></li>                                                                
                   </ul>
                    <a class="aa-browse-btn" href="#">Browse all Product <span class="fa fa-long-arrow-right"></span></a>
                 </div>
@@ -75,7 +75,7 @@
 </template>
 
 <script>
-    import Item from './item/Item.vue'
+    import Product from '../product/Product.vue'
     export default{
         data(){
             return {
@@ -90,7 +90,7 @@
         },
 
         components:{
-            appItem : Item,
+            appProduct : Product,
         }
     };
 </script>

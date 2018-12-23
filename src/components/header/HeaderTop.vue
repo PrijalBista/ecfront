@@ -45,9 +45,9 @@
               <!-- / header top left -->
               <div class="aa-header-top-right">
                 <ul class="aa-head-top-nav-right">
-                  <li><a href="account.html">My Account</a></li>
-                  <li class="hidden-xs"><a href="wishlist.html">Wishlist</a></li>
-                  <li class="hidden-xs"><a href="cart.html">My Cart</a></li>
+                  <li><router-link to="/account">My Account</router-link></li>
+                  <li class="hidden-xs"><router-link to="/wishlist">Wishlist</router-link></li>
+                  <li class="hidden-xs"><router-link to="/cart">My Cart</router-link></li>
                   <li class="hidden-xs"><a href="checkout.html">Checkout</a></li>
                   <li><a href="" data-toggle="modal" data-target="#login-modal">Login</a></li>
                 </ul>

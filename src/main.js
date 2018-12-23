@@ -25,8 +25,11 @@ export const eventBus = new Vue({
 });
 
 const router = new VueRouter({
-	mode: 'history',
-	routes
+	mode: 'hash',
+	routes,
+	scrollBehavior (to, from, savedPosition) {
+    	return { x: 0, y: 0 };
+  	}
 });
 
 router.beforeEach((to, from, next) => {

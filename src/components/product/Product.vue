@@ -2,7 +2,10 @@
 	<div>
 		<!-- start single product item -->
 		<figure>
-		<a class="aa-product-img" href="#"><img :src="item.imgSrc" alt="polo shirt img"></a>
+		<!-- <a class="aa-product-img" href="#"><img :src="item.imgSrc" alt="polo shirt img"></a> -->
+		<router-link to="/product/102" class="aa-product-img">
+			<img :src="item.imgSrc" alt="polo shirt img">
+		</router-link>
 		<a class="aa-add-card-btn"href="#"><span class="fa fa-shopping-cart"></span>Add To Cart</a>
 		 <figcaption>
 		  <h4 class="aa-product-title"><a href="#">{{item.title}}</a></h4>
