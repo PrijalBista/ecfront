@@ -1726,10 +1726,16 @@ img {
   font-size: 15px;
   letter-spacing: 0.5px;
 }
+@media (min-width: 577px){
+  #aa-subscribe .aa-subscribe-area .aa-subscribe-form {
+    margin: 20px auto 0;
+    position: relative;
+    width: 450px;
+  }
+}
 #aa-subscribe .aa-subscribe-area .aa-subscribe-form {
   margin: 20px auto 0;
   position: relative;
-  width: 450px;
 }
 #aa-subscribe .aa-subscribe-area .aa-subscribe-form input[type="email"] {
   border: 1px solid #ccc;
@@ -2374,7 +2380,7 @@ img {
   text-transform: uppercase;
 }
 #cart-view .cart-view-area .cart-view-table .cart-view-total {
-  width: 400px;
+  /*width: 400px;*/
   margin: 0 auto;
   text-align: center;
 }
