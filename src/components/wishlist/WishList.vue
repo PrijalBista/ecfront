@@ -20,31 +20,10 @@
                       </tr>
                     </thead>
                     <tbody>
-                      <tr>
-                        <td><a class="remove" href="#"><fa class="fa fa-close"></fa></a></td>
-                        <td><a href="#"><img src="src/assets/img/man/polo-shirt-1.png" alt="img"></a></td>
-                        <td><a class="aa-cart-title" href="#">Polo T-Shirt</a></td>
-                        <td>$250</td>
-                        <td>In Stock</td>
-                        <td><a href="#" class="aa-add-to-cart-btn">Add To Cart</a></td>
-                      </tr>
-                      <tr>
-                        <td><a class="remove" href="#"><fa class="fa fa-close"></fa></a></td>
-                        <td><a href="#"><img src="src/assets/img/man/polo-shirt-2.png" alt="img"></a></td>
-                        <td><a class="aa-cart-title" href="#">Polo T-Shirt</a></td>
-                        <td>$150</td>
-                        <td>In Stock</td>
-                        <td><a href="#" class="aa-add-to-cart-btn">Add To Cart</a></td>
-                      </tr>
-                      <tr>
-                        <td><a class="remove" href="#"><fa class="fa fa-close"></fa></a></td>
-                        <td><a href="#"><img src="src/assets/img/man/polo-shirt-3.png" alt="img"></a></td>
-                        <td><a class="aa-cart-title" href="#">Polo T-Shirt</a></td>
-                        <td>$50</td>
-                        <td>In Stock</td>
-                        <td><a href="#" class="aa-add-to-cart-btn">Add To Cart</a></td>
-                      </tr>                     
-                      </tbody>
+                      <app-row/>
+                      <app-row/>
+                      <app-row/>                  
+                    </tbody>
                   </table>
                 </div>
              </form>             
@@ -56,3 +35,13 @@
  </section>
  <!-- / Cart view section -->
 </template>
+
+<script>
+  import TableRow from './TableRow.vue'
+
+  export default{
+    components:{
+      appRow: TableRow
+    }
+  };
+</script>
