@@ -1,5 +1,6 @@
 import ForgotPassword from './components/auth/ForgotPassword.vue'
 import ResetPassword from './components/auth/ResetPassword.vue'
+import Home from './views/Home.vue'
 
 import Products from './views/ProductsPage.vue'
 import ProductDetail from './views/ProductDetailPage.vue'
@@ -31,21 +32,21 @@ export const routes = [
 
 	{
 		path:'/',
-		component:Products,
-		meta :{forAuth: false}
+		component:Home,
+		meta :{requiresAuth: false}
 	},
 
 	{
 		path:'/product/:id',
 		component:ProductDetail,
-		meta: {forAuth: false}
+		meta: {requiresAuth: false}
 
 	},
 	
 	{
 		path:'/carts',
 		component:Carts,
-		meta: {forAuth: false}
+		meta: {requiresAuth: false}
 	},
 	
 	{

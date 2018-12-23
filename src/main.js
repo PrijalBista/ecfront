@@ -1,11 +1,8 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-
 import App from './App.vue'
-
 import Auth from './packages/auth/Auth'
 import Axios from './packages/axios/Axios'
-
 import {store} from './store/store'
 import {routes} from './routes'
 
