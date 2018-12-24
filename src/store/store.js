@@ -1,6 +1,7 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
 import VuexPersistence from 'vuex-persist'
+import {router} from './../main.js';
 import {eventBus} from './../main.js'
 
 Vue.use(Vuex);
@@ -12,7 +13,8 @@ export const store = new Vuex.Store({
 		cart:[],
 		prodCount:0,
 		wishlist:[],
-		loading: false
+		loading: false,
+		redirectTo: "/",
 	},
 
 	plugins: [new VuexPersistence().plugin],
@@ -85,6 +87,10 @@ export const store = new Vuex.Store({
 
 		unsetLoading(state){
 			state.loading = false;
+		},
+
+		resetRedirectTo(state){
+			state.redirectTo = '/';
 		}
 	},
 
@@ -101,12 +107,15 @@ export const store = new Vuex.Store({
 						}
 					}).then(res=>{
 						context.commit('setAuthUser', res.data);
+						// Redirect to requested page
+						router.push(this.state.redirectTo);	
+						context.commit('resetRedirectTo');
 					}, err=>{
-						eventBus.showError(err.response.data);
+						eventBus.showLoginError(err.response.data);
 					});
 
 		        }, err=>{
-		            eventBus.showError(err.response.data);
+		            eventBus.showLoginError(err.response.data);
 	        	}).then(()=>{
 					context.commit('unsetLoading');
 				});
@@ -120,6 +129,8 @@ export const store = new Vuex.Store({
 				}
 			}).then(res=>{
 				context.commit('unsetAuthUser');
+				// Redirect to home
+				router.push('/');	
 			}, err=>{
 				eventBus.showError(err.response.data);
 			}).then(()=>{

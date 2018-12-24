@@ -12,6 +12,9 @@ Vue.use(VueRouter);
 
 export const eventBus = new Vue({
 	methods:{
+		showLoginError(error){
+			this.$emit('showLoginError', error);
+		},
 		showError(error){
 			this.$emit('showError', error);
 		},
@@ -24,7 +27,7 @@ export const eventBus = new Vue({
 	}
 });
 
-const router = new VueRouter({
+export const router = new VueRouter({
 	mode: 'hash',
 	routes,
 	scrollBehavior (to, from, savedPosition) {
@@ -32,25 +35,25 @@ const router = new VueRouter({
   	}
 });
 
-router.beforeEach((to, from, next) => {
-	if(to.meta.requiresAuth == false){			// eg: Cart
-		next();
-	}else if(to.meta.forAuth == false){			// eg: Forgot Password, Reset Password
-		if(Vue.auth.isAuth() == false){
-			next();
-		}else{
-			next('/');
-		}
-	}
-	else if(to.meta.requiresAuth == true){		// eg: Order
-		if(Vue.auth.isAuth() == true){
-			next();
-		}else{
-			next('/account');
-		}
-	}
-	next();
-});
+// router.beforeEach((to, from, next) => {
+// 	if(to.meta.requiresAuth == false){			// eg: Cart
+// 		next();
+// 	}else if(to.meta.forAuth == false){			// eg: Forgot Password, Reset Password
+// 		if(Vue.auth.isAuth() == false){
+// 			next();
+// 		}else{
+// 			next('/');
+// 		}
+// 	}
+// 	else if(to.meta.requiresAuth == true){		// eg: Order
+// 		if(Vue.auth.isAuth() == true){
+// 			next();
+// 		}else{
+// 			next('/account');
+// 		}
+// 	}
+// 	next();
+// });
 
 new Vue({
   el: '#app',

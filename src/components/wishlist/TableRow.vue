@@ -8,3 +8,9 @@
 		<td><a href="#" class="aa-add-to-cart-btn">Add To Cart</a></td>
 	</tr>
 </template>
+
+<script>
+	export default{
+		
+	};
+</script>

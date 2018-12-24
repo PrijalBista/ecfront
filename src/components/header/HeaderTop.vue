@@ -45,11 +45,19 @@
               <!-- / header top left -->
               <div class="aa-header-top-right">
                 <ul class="aa-head-top-nav-right">
-                  <li><router-link to="/account">My Account</router-link></li>
-                  <li class="hidden-xs"><router-link to="/wishlist">Wishlist</router-link></li>
-                  <li class="hidden-xs"><router-link to="/cart">My Cart</router-link></li>
+                  <li><router-link to="/account">My Account</router-link></li> <!---->
+                  <li class="hidden-xs"><router-link to="/wishlist">Wishlist</router-link></li> <!---->
+                  <li class="hidden-xs"><router-link to="/cart">My Cart</router-link></li> <!---->
                   <li class="hidden-xs"><a href="checkout.html">Checkout</a></li>
-                  <li><a href="" data-toggle="modal" data-target="#login-modal">Login</a></li>
+
+                  <li v-if="!$store.getters.isAuth"> <!---->
+                    <a href="" data-toggle="modal" data-target="#login-modal">Login</a>
+                  </li> 
+
+                  <li v-else> <!---->
+                    <a href="#" @click="logout">Logout</a>
+                  </li>
+
                 </ul>
               </div>
             </div>
@@ -59,3 +67,13 @@
     </div>
     <!-- / header top  -->	
 </template>
+
+<script>
+  export default{
+    methods:{
+      logout(){
+              this.$store.dispatch('asyncUnsetAuthUser');
+          }
+    }
+  };
+</script>

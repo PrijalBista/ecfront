@@ -53,3 +53,25 @@
   </section>
   <!-- / Testimonial -->	
 </template>
+
+<script>
+
+    export default{
+      mounted(){
+
+        /* ----------------------------------------------------------- */
+        /*  7. TESTIMONIAL SLIDER (SLICK SLIDER)
+        /* ----------------------------------------------------------- */     
+        jQuery('.aa-testimonial-slider').slick({
+          dots: true,
+          infinite: true,
+          arrows: false,
+          speed: 300,
+          slidesToShow: 1,
+          adaptiveHeight: true
+        });
+      }
+    };
+    
+
+</script>

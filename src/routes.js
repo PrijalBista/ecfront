@@ -2,13 +2,13 @@
 // import ResetPassword from './components/auth/ResetPassword.vue'
 // import Products from './views/ProductsPage.vue'
 // import RegisterLogin from './views/RegisterLoginPage.vue'
-
+import Vue from 'vue';
 import Home from './views/Home.vue'
 import ProductDetail from './views/ProductDetail.vue'
 import Account from './views/Account.vue'
 import WishList from './views/WishList.vue'
 import Cart from './views/Cart.vue'
-
+import {store} from './store/store.js'
 
 export const routes = [
 
@@ -38,13 +38,16 @@ export const routes = [
 	{
 		path:'/product/:id',
 		component:ProductDetail,
-		meta: {requiresAuth: false}
+		meta: {requiresAuth: false},
 	},
 
 	{
 		path:'/account',
 		component:Account,
-		meta: {forAuth: false}
+		meta: {forAuth: false},
+		beforeEnter: (to, from, next) => {
+        	Vue.auth.isAuth() == false ? next(): next('/');
+      	}
 	},
 
 	{
@@ -56,7 +59,11 @@ export const routes = [
 	{
 		path:'/cart',
 		component:Cart,
-		meta: {requiresAuth: false}
+		meta: {requiresAuth: false},
+		beforeEnter: (to, from, next) => {
+			store.state.redirectTo = to.fullPath;
+        	Vue.auth.isAuth() == false ? next('/account'): next();
+      	}
 	},
 	
 ];

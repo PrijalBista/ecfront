@@ -19,7 +19,7 @@ export default {
   components:{
     appMenu: Menu,
     appHeader: Header,
-	appFooter: Footer,
+	  appFooter: Footer,
     appQuickView: QuickView
   },
 };
