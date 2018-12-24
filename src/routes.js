@@ -8,6 +8,7 @@ import ProductDetail from './views/ProductDetail.vue'
 import Account from './views/Account.vue'
 import WishList from './views/WishList.vue'
 import Cart from './views/Cart.vue'
+import Checkout from './views/Checkout.vue'
 import {store} from './store/store.js'
 
 export const routes = [
@@ -60,6 +61,12 @@ export const routes = [
 		path:'/cart',
 		component:Cart,
 		meta: {requiresAuth: false},
+	},
+
+	{
+		path:'/checkout',
+		component:Checkout,
+		meta: {requiresAuth: true},
 		beforeEnter: (to, from, next) => {
 			store.state.redirectTo = to.fullPath;
         	Vue.auth.isAuth() == false ? next('/account'): next();
