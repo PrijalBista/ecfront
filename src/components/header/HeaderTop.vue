@@ -48,7 +48,7 @@
                   <li><router-link to="/account">My Account</router-link></li> <!---->
                   <li class="hidden-xs"><router-link to="/wishlist">Wishlist</router-link></li> <!---->
                   <li class="hidden-xs"><router-link to="/cart">My Cart</router-link></li> <!---->
-                  <li class="hidden-xs"><a href="checkout.html">Checkout</a></li>
+                  <li class="hidden-xs"><router-link to="/checkout">Checkout</router-link></li> <!---->
 
                   <li v-if="!$store.getters.isAuth"> <!---->
                     <a href="" data-toggle="modal" data-target="#login-modal">Login</a>

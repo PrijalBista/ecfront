@@ -12,7 +12,9 @@
 		    <input type="password" placeholder="Password" v-model="auth.password">  <!---->
 		    <button type="submit" class="aa-browse-btn" @click.prevent="login(null)">Login</button> <!---->
 		    <label class="rememberme" for="rememberme"><input type="checkbox" id="rememberme"> Remember me </label>
-		    <p class="aa-lost-password"><a href="#">Lost your password?</a></p>
+		    <p class="aa-lost-password">
+		    	<router-link to="/password/reset">Lost your password?</router-link><!---->
+		    </p>
 		  </form>
 		</div>
 	</div>
