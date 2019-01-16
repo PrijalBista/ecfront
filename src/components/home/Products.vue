@@ -9,72 +9,27 @@
               <div class="aa-product-inner">
                 <!-- start prduct navigation -->
                  <ul class="nav nav-tabs aa-products-tab">
-                    <li class="active"><a href="#men" data-toggle="tab">Men</a></li>
+                    <li v-for="cat in this.$store.getters.getCategory" :key="cat.id" :class="(cat.id==1)?'active':''"><a :href="'#'+  cat.category" data-toggle="tab">{{cat.category}}</a></li>
+                   <!--  <li class="active"><a href="#men" data-toggle="tab">Men</a></li>
                     <li><a href="#women" data-toggle="tab">Women</a></li>
                     <li><a href="#sports" data-toggle="tab">Sports</a></li>
-                    <li><a href="#electronics" data-toggle="tab">Electronics</a></li>
+                    <li><a href="#electronics" data-toggle="tab">Electronics</a></li> -->
                   </ul>
                   <!-- Tab panes -->
                   <div class="tab-content">
-                    <!-- Start men product category -->
-                    <div class="tab-pane fade in active" id="men">
-                      <ul class="aa-product-catg">
-                        <!-- start single product item -->
-                        <li><app-product :item="item"/></li>
-                        <li><app-product :item="item"/></li>
-                        <li><app-product :item="item"/></li>
-                        <li><app-product :item="item"/></li>
-                        <li><app-product :item="item"/></li>
-                        <li><app-product :item="item"/></li>
-                        <li><app-product :item="item"/></li>
-                        <li><app-product :item="item"/></li>                       
-                      </ul>
-                      <a class="aa-browse-btn" href="#">Browse all Product <span class="fa fa-long-arrow-right"></span></a>
-                    </div>
-                    <!-- / men product category -->
-                    <!-- start women product category -->
-                    <div class="tab-pane fade" id="women">
-                      <ul class="aa-product-catg">
-                        <!-- start single product item -->
-                        <li><app-product :item="item"/></li>
-                        <li><app-product :item="item"/></li>
-                        <li><app-product :item="item"/></li>
-                        <li><app-product :item="item"/></li>
-                        <li><app-product :item="item"/></li>
-                        <li><app-product :item="item"/></li>
-                        <li><app-product :item="item"/></li>
-                        <li><app-product :item="item"/></li>  
-                      </ul>
-                      <a class="aa-browse-btn" href="#">Browse all Product <span class="fa fa-long-arrow-right"></span></a>
-                    </div>
-                    <!-- / women product category -->
-                    <!-- start sports product category -->
-                    <div class="tab-pane fade" id="sports">
-                      <ul class="aa-product-catg">
-                        <!-- start single product item -->
-                        <li><app-product :item="item"/></li>
-                        <li><app-product :item="item"/></li>
-                        <li><app-product :item="item"/></li>
-                        <li><app-product :item="item"/></li>
-                        <li><app-product :item="item"/></li>
-                        <li><app-product :item="item"/></li>
-                        <li><app-product :item="item"/></li>
-                        <li><app-product :item="item"/></li>                          
-                      </ul>
-                    </div>
-                    <!-- / sports product category -->
-                    <!-- start electronic product category -->
-                    <div class="tab-pane fade" id="electronics">
+                    <!-- loop through all  category -->
+                    <!-- start  category -->
+                    <div v-for="cat in products" :key="cat.category" class="tab-pane fade in" :id="cat.category">
                        <ul class="aa-product-catg">
                         <!-- start single product item -->
-                        <li v-for="product in products" v-bind:key="product.id">
+                        <li v-for="product in cat.products" v-bind:key="product.id">
                           <app-product :item="product"/>
                         </li>
                         
                        </ul>
                       <a class="aa-browse-btn" href="#">Browse all Product <span class="fa fa-long-arrow-right"></span></a>
                     </div>
-                    <!-- / electronic product category -->
+                    <!-- / end category -->
                   </div>      
               </div>
             </div>
@@ -110,19 +65,34 @@
 
         components:{
             appProduct : Product,
-        },
+        },  
 
         methods:{
-            fetchProducts(page_url){
+            fetchProducts(page_url){//fetching latest products
               let vm = this;
               page_url = page_url || '/api/products'
-              fetch(page_url)
-                .then(res=>res.json())
-                .then(res=>{
-                  this.products=res.data;
-                  vm.makePagination(res.meta,res.links);
-                })
-                .catch(err=>console.log(err));
+            //   fetch(page_url)
+            //     .then(res=>res.json())
+            //     .then(res=>{
+            //       this.products.push({'category':'latest','products':res.data});
+            //       vm.makePagination(res.meta,res.links);
+            //     })
+            //     .catch(err=>console.log(err));
+
+                this.$store.getters.getCategory.forEach(function(cat,index){  //fetching products for each category
+                    console.log(cat.category + "url : "+ page_url+"?category="+cat.id);
+                    fetch(page_url+"?category="+cat.id)
+                    .then(res=>res.json())
+                    .then(res=>{
+                      vm.products.push({'category':cat.category, 'products':res.data});
+                      //pagination milaunu paryo vane res.meta ra res.links ma xa
+                      //for debugging .. product object structure 
+                      // [ { category:'', products:[{},{},{}] }, {category:'', products:[{},{}]}, ]
+                      //console logging product
+                      if(index==3)console.log("\n PRODUCTS OBJECT: \n"+JSON.stringify(vm.products));
+                    })
+                    .catch(err=>console.log(err)); 
+                });
             },
             makePagination(meta,links){
               let pagination = {
