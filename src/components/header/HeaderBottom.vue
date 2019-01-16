@@ -21,36 +21,30 @@
                 <a class="aa-cart-link" href="#">
                   <span class="fa fa-shopping-basket"></span>
                   <span class="aa-cart-title">SHOPPING CART</span>
-                  <span class="aa-cart-notify">2</span>
+                  <span class="aa-cart-notify" v-if="this.$store.getters.getprodCount>0">{{this.$store.getters.getprodCount}}</span>
                 </a>
                 <div class="aa-cartbox-summary">
                   <ul>
-                    <li>
+                    <li v-for="item in this.$store.getters.getCart" v-bind:key="item.productId">
                       <a class="aa-cartbox-img" href="#"><img src="img/woman-small-2.jpg" alt="img"></a>
                       <div class="aa-cartbox-info">
-                        <h4><a href="#">Product Name</a></h4>
-                        <p>1 x $250</p>
+                        <h4><a href="#">{{item.title}}</a></h4>
+                        <p>{{item.qty}}x {{item.price}}</p>
                       </div>
-                      <a class="aa-remove-product" href="#"><span class="fa fa-times"></span></a>
-                    </li>
-                    <li>
-                      <a class="aa-cartbox-img" href="#"><img src="img/woman-small-1.jpg" alt="img"></a>
-                      <div class="aa-cartbox-info">
-                        <h4><a href="#">Product Name</a></h4>
-                        <p>1 x $250</p>
-                      </div>
-                      <a class="aa-remove-product" href="#"><span class="fa fa-times"></span></a>
+                      <a class="aa-remove-product" @click="removeFromCart(item)"><span class="fa fa-times"></span></a>
                     </li>                    
                     <li>
                       <span class="aa-cartbox-total-title">
                         Total
                       </span>
                       <span class="aa-cartbox-total-price">
-                        $500
+                        {{this.$store.getters.getTotal}}
                       </span>
                     </li>
                   </ul>
-                  <a class="aa-cartbox-checkout aa-primary-btn" href="checkout.html">Checkout</a>
+                  <router-link to="/cart">
+                  <a class="aa-cartbox-checkout aa-primary-btn" href="">Checkout</a>
+                  </router-link>
                 </div>
               </div>
               <!-- / cart box -->
@@ -68,3 +62,13 @@
       </div>
     </div>	
 </template>
+
+<script>
+  export default{
+    methods:{
+      removeFromCart(product){
+        this.$store.dispatch('removeProductFromCart',product);
+      },
+    }
+  }
+</script>

@@ -270,31 +270,23 @@
                         </tr>
                       </thead>
                       <tbody>
-                        <tr>
-                          <td>T-Shirt <strong> x  1</strong></td>
-                          <td>$150</td>
-                        </tr>
-                        <tr>
-                          <td>Polo T-Shirt <strong> x  1</strong></td>
-                          <td>$250</td>
-                        </tr>
-                        <tr>
-                          <td>Shoes <strong> x  1</strong></td>
-                          <td>$350</td>
+                        <tr v-for="item in this.$store.getters.getCart" :key="item.productId">
+                          <td>{{item.title}}<strong> x  {{item.qty}}</strong></td>
+                          <td>Nrs. {{item.price*item.qty}}</td>
                         </tr>
                       </tbody>
                       <tfoot>
                         <tr>
                           <th>Subtotal</th>
-                          <td>$750</td>
+                          <td>Nrs. {{this.$store.getters.getTotal}}</td>
                         </tr>
                          <tr>
                           <th>Tax</th>
-                          <td>$35</td>
+                          <td>Nrs. 0</td>
                         </tr>
                          <tr>
                           <th>Total</th>
-                          <td>$785</td>
+                          <td>Nrs. {{this.$store.getters.getTotal}}</td>
                         </tr>
                       </tfoot>
                     </table>

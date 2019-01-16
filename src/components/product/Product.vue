@@ -6,10 +6,10 @@
 		<router-link to="/product/102" class="aa-product-img">
 			<img :src="item.imgSrc" alt="polo shirt img">
 		</router-link>
-		<a class="aa-add-card-btn"href="#"><span class="fa fa-shopping-cart"></span>Add To Cart</a>
+		<a class="aa-add-card-btn" @click="addToCart(item,1)" ><span class="fa fa-shopping-cart"></span>Add To Cart</a>
 		 <figcaption>
 		  <h4 class="aa-product-title"><a href="#">{{item.title}}</a></h4>
-		  <span class="aa-product-price">{{item.price}}</span>
+		  <span class="aa-product-price">Nrs.{{item.price}}</span>
 		  <span v-if="isDiscounted" class="aa-product-price"><del>{{item.oldPrice}}</del></span>
 		</figcaption>
 		</figure>      
@@ -35,6 +35,15 @@
 			isDiscounted(){
 				return ! (this.item.oldPrice == "");
 			}
-		}
+		},
+
+		methods:{
+			addToCart(product,qty){
+				//this.$store.state.cart=[]
+				if(product.quantity=="Out of Stock") return;
+				this.$store.dispatch('addProductToCart',{'productId':product.id,'qty':parseInt(qty),'maxQty':product.quantity,'price':product.price,'title':product.title});
+				console.log(JSON.stringify(this.$store.getters.getCart));
+			}
+		},
 	};
 </script>

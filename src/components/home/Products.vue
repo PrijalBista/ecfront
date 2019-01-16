@@ -67,15 +67,11 @@
                     <div class="tab-pane fade" id="electronics">
                        <ul class="aa-product-catg">
                         <!-- start single product item -->
-                        <li><app-product :item="item"/></li>
-                        <li><app-product :item="item"/></li>
-                        <li><app-product :item="item"/></li>
-                        <li><app-product :item="item"/></li>
-                        <li><app-product :item="item"/></li>
-                        <li><app-product :item="item"/></li>
-                        <li><app-product :item="item"/></li>
-                        <li><app-product :item="item"/></li>                          
-                      </ul>
+                        <li v-for="product in products" v-bind:key="product.id">
+                          <app-product :item="product"/>
+                        </li>
+                        
+                       </ul>
                       <a class="aa-browse-btn" href="#">Browse all Product <span class="fa fa-long-arrow-right"></span></a>
                     </div>
                     <!-- / electronic product category -->
@@ -96,6 +92,8 @@
 	export default{
         data(){
             return {
+                products:[],
+                pagination:{},
                 item: {
                     imgSrc : "src/assets/img/man/polo-shirt-2.png",
                     title: "Polo T-Shirt Lorem",
@@ -106,8 +104,35 @@
             }
         },
 
+        created(){
+            this.fetchProducts('http://localhost:8000/api/products');
+        },
+
         components:{
             appProduct : Product,
+        },
+
+        methods:{
+            fetchProducts(page_url){
+              let vm = this;
+              page_url = page_url || '/api/products'
+              fetch(page_url)
+                .then(res=>res.json())
+                .then(res=>{
+                  this.products=res.data;
+                  vm.makePagination(res.meta,res.links);
+                })
+                .catch(err=>console.log(err));
+            },
+            makePagination(meta,links){
+              let pagination = {
+                current_page: meta.current_page,
+                last_page: meta.last_page,
+                next_page_url: links.next,
+                prev_page_url: links.prev,
+              }
+              this.pagination = pagination;
+            }
         }
     };
 </script>

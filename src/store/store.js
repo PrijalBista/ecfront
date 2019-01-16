@@ -15,6 +15,7 @@ export const store = new Vuex.Store({
 		wishlist:[],
 		loading: false,
 		redirectTo: "/",
+		category:{},
 	},
 
 	plugins: [new VuexPersistence().plugin],
@@ -42,7 +43,15 @@ export const store = new Vuex.Store({
 
 		isLoading: (state)=>{
 			return state.loading;
-		}
+		},
+
+		getTotal: (state)=>{
+			return state.cart.reduce((acc,cur)=>{return acc+cur.price*cur.qty},0);
+		},
+
+		getCategory: (state)=>{
+			return state.category;
+		},
 	},
 
 	mutations:{
@@ -75,6 +84,16 @@ export const store = new Vuex.Store({
 		removeProductFromCart(state,payload){
 			state.cart.splice(state.cart.indexOf(payload),1);
 			state.prodCount--;
+		},
+
+		fetchCategory(state){
+			fetch("http://localhost:8000/api/categories")
+			.then(res=>res.json())
+			.then(res=>{
+			  console.log('fetched');
+			  state.category=res.data;
+			})
+			.catch(err=>console.log(err));
 		},
 
 		addProductToWishlist(state,payload){
@@ -185,6 +204,10 @@ export const store = new Vuex.Store({
 			}).then(()=>{
 				context.commit('unsetLoading');
 			});
+		},
+
+		fetchCategory(context){
+			context.commit('fetchCategory');
 		},
 	}
 

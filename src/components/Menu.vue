@@ -131,3 +131,11 @@
   </section>
   <!-- / menu -->
 </template>
+
+<script>
+  export default{
+    created(){
+      this.$store.dispatch('fetchCategory');
+    }
+  }
+</script>

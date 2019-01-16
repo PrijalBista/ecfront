@@ -19,29 +19,14 @@
                       </tr>
                     </thead>
                     <tbody>
-                      <tr>
-                        <td><a class="remove" href="#"><fa class="fa fa-close"></fa></a></td>
+                      <!-- <cart-item v-for="item in this.$store.getters.getCart" v-bind:key="item.productId" :item="item"></cart-item> -->
+                      <tr v-for="item in this.$store.getters.getCart" v-bind:key="item.productId">
+                        <td><a @click="removeFromCart(item)" class="remove" ><fa class="fa fa-close"></fa></a></td>
                         <td><a href="#"><img src="src/assets/img/man/polo-shirt-1.png" alt="img"></a></td>
-                        <td><a class="aa-cart-title" href="#">Polo T-Shirt</a></td>
-                        <td>$250</td>
-                        <td><input class="aa-cart-quantity" type="number" value="1"></td>
-                        <td>$250</td>
-                      </tr>
-                      <tr>
-                        <td><a class="remove" href="#"><fa class="fa fa-close"></fa></a></td>
-                        <td><a href="#"><img src="src/assets/img/man/polo-shirt-2.png" alt="img"></a></td>
-                        <td><a class="aa-cart-title" href="#">Polo T-Shirt</a></td>
-                        <td>$150</td>
-                        <td><input class="aa-cart-quantity" type="number" value="1"></td>
-                        <td>$150</td>
-                      </tr>
-                      <tr>
-                        <td><a class="remove" href="#"><fa class="fa fa-close"></fa></a></td>
-                        <td><a href="#"><img src="src/assets/img/man/polo-shirt-3.png" alt="img"></a></td>
-                        <td><a class="aa-cart-title" href="#">Polo T-Shirt</a></td>
-                        <td>$50</td>
-                        <td><input class="aa-cart-quantity" type="number" value="1"></td>
-                        <td>$50</td>
+                        <td><a class="aa-cart-title" href="#">{{item.title}}</a></td>
+                        <td>Nrs.{{item.price}}</td>
+                        <td><input @change="addToCart(item,$event.target.value)" :value="item.qty" class="aa-cart-quantity" type="number" :max="item.maxQty" min="0"></td>
+                        <td>{{item.qty*item.price}}</td>
                       </tr>
                       <tr>
                         <td colspan="6" class="aa-cart-view-bottom">
@@ -63,15 +48,17 @@
                  <tbody>
                    <tr>
                      <th>Subtotal</th>
-                     <td>$450</td>
+                     <td>Npr. {{this.$store.getters.getTotal}}</td>
                    </tr>
                    <tr>
                      <th>Total</th>
-                     <td>$450</td>
+                     <td>Npr. {{this.$store.getters.getTotal}}</td>
                    </tr>
                  </tbody>
                </table>
-               <a href="#" class="aa-cart-view-btn">Proced to Checkout</a>
+               <router-link to="/checkout">
+                  <a href="" class="aa-cart-view-btn">Proced to Checkout</a> 
+               </router-link>
              </div>
            </div>
          </div>
@@ -81,3 +68,26 @@
  </section>
  <!-- / Cart view section -->
 </template>
+
+<script>
+  import CartItem from './CartItem.vue';
+  export default{
+
+    components:{
+      cartItem : CartItem,
+    },
+
+    methods:{
+
+      addToCart(product,qty){
+        product.qty=parseInt(qty);
+        this.$store.dispatch('addProductToCart',product);
+        console.log(JSON.stringify(this.$store.getters.getCart));
+      },
+
+      removeFromCart(product){
+        this.$store.dispatch('removeProductFromCart',product);
+      },
+    },
+  }
+</script>
