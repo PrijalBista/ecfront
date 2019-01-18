@@ -86,14 +86,8 @@ export const store = new Vuex.Store({
 			state.prodCount--;
 		},
 
-		fetchCategory(state){
-			fetch("http://localhost:8000/api/categories")
-			.then(res=>res.json())
-			.then(res=>{
-			  console.log('fetched');
-			  state.category=res.data;
-			})
-			.catch(err=>console.log(err));
+		fetchCategory(state,payload){
+			state.category=payload;
 		},
 
 		addProductToWishlist(state,payload){
@@ -207,7 +201,14 @@ export const store = new Vuex.Store({
 		},
 
 		fetchCategory(context){
-			context.commit('fetchCategory');
+			fetch("http://localhost:8000/api/categories")
+			.then(res=>res.json())
+			.then(res=>{
+			  console.log('fetched');
+			  let payload=res.data;
+			  context.commit('fetchCategory',payload);
+			})
+			.catch(err=>console.log(err));
 		},
 	}
 

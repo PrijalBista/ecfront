@@ -19,7 +19,7 @@
                   <div class="tab-content">
                     <!-- loop through all  category -->
                     <!-- start  category -->
-                    <div v-for="cat in products" :key="cat.category" class="tab-pane fade in" :id="cat.category">
+                    <div v-for="cat in computedProducts" :key="cat.category" class="tab-pane fade in" :id="cat.category" :class="{active: cat==computedProducts[0]}">
                        <ul class="aa-product-catg">
                         <!-- start single product item -->
                         <li v-for="product in cat.products" v-bind:key="product.id">
@@ -89,7 +89,7 @@
                       //for debugging .. product object structure 
                       // [ { category:'', products:[{},{},{}] }, {category:'', products:[{},{}]}, ]
                       //console logging product
-                      if(index==3)console.log("\n PRODUCTS OBJECT: \n"+JSON.stringify(vm.products));
+                      //if(index==3)console.log("\n PRODUCTS OBJECT: \n"+JSON.stringify(vm.products));
                     })
                     .catch(err=>console.log(err)); 
                 });
@@ -103,6 +103,11 @@
               }
               this.pagination = pagination;
             }
+        },
+        computed:{
+          computedProducts(){
+            return this.products;
+          },          
         }
     };
 </script>
