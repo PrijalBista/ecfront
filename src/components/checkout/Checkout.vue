@@ -346,8 +346,9 @@
 
     methods: {
       placeOrder(){
-          if(this.$store.getters.isAuth)
+          if(this.$store.getters.isAuth && this.$store.getters.getCart.length > 0){
             this.$store.dispatch('asyncPlaceOrder');
+          }
       },
 
       login(registerInfo){

@@ -42,7 +42,7 @@
                       </span>
                     </li>
                   </ul>
-                  <router-link to="/cart">
+                  <router-link to="/cart" v-if="$store.getters.getCart.length > 0">
                   <a class="aa-cartbox-checkout aa-primary-btn" href="">Checkout</a>
                   </router-link>
                 </div>

@@ -42,7 +42,7 @@
                 	grant_type: 'password',
                 	username: "destinee.williamson@example.org",
                 	password: "secret",
-					scope: 'place-orders'
+                	scope: 'place-orders',
             	},
             	error: ""
         	}

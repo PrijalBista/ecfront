@@ -58,5 +58,5 @@
     created(){
       this.$store.dispatch('fetchCategory');
     }
-  }
+  };
 </script>

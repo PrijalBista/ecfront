@@ -75,10 +75,11 @@ export const routes = [
 		path:'/checkout',
 		component:Checkout,
 		meta: {requiresAuth: false},
-		// beforeEnter: (to, from, next) => {
-		// 	store.state.redirectTo = to.fullPath;
-  //       	Vue.auth.isAuth() == false ? next('/account'): next();
-  //     	}
+		beforeEnter: (to, from, next) => {
+			store.state.cart.length > 0 ? next(): next('/');
+			// store.state.redirectTo = to.fullPath;
+         	//Vue.auth.isAuth() == false ? next('/account'): next();
+      	}
 	},
 
 	{
