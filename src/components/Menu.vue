@@ -16,7 +16,7 @@
           <div class="navbar-collapse collapse">
             <!-- Left nav -->
             <ul class="nav navbar-nav">
-              <li><a href="index.html">Home</a></li>
+              <li><a href="/">Home</a></li>
               <!-- show all categories and subcategories -->
               <li v-for="cat in this.$store.getters.getCategory" :key="cat.id"><a href="#">{{cat.category}}<span class="caret"></span></a>
                 <ul class="dropdown-menu">                

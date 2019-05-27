@@ -10,42 +10,45 @@
               <div class="col-md-8">
                 <div class="checkout-left">
                   <div class="panel-group" id="accordion">
-                    <!-- Coupon section -->
-                    <div class="panel panel-default aa-checkout-coupon">
+
+                    <!-- Login section -->
+                    <div class="panel panel-default aa-checkout-login" v-if="!$store.getters.isAuth">
                       <div class="panel-heading">
                         <h4 class="panel-title">
                           <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne">
-                            Have a Coupon?
+                            Client Login 
                           </a>
                         </h4>
                       </div>
                       <div id="collapseOne" class="panel-collapse collapse in">
+                        <div class="panel-body">
+                          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quaerat voluptatibus modi pariatur qui reprehenderit asperiores fugiat deleniti praesentium enim incidunt.</p>
+                          <input type="text" placeholder="Username or email" v-model="auth.username">
+                          <input type="password" placeholder="Password" v-model="auth.password">
+                          <button type="submit" class="aa-browse-btn" @click.prevent="login(null)">Login</button>
+                          <label for="rememberme"><input type="checkbox" id="rememberme"> Remember me </label>
+                          <p class="aa-lost-password"><router-link to="/password/reset">Lost your password?</router-link></p>
+                        </div>
+                      </div>
+                    </div>
+
+                    <!-- Coupon section -->
+                    <div class="panel panel-default aa-checkout-coupon">
+                      <div class="panel-heading">
+                        <h4 class="panel-title">
+                          <a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo">
+                            Have a Coupon?
+                          </a>
+                        </h4>
+                      </div>
+                      <div id="collapseTwo" class="panel-collapse collapse">
                         <div class="panel-body">
                           <input type="text" placeholder="Coupon Code" class="aa-coupon-code">
                           <input type="submit" value="Apply Coupon" class="aa-browse-btn">
                         </div>
                       </div>
                     </div>
-                    <!-- Login section -->
-                    <div class="panel panel-default aa-checkout-login">
-                      <div class="panel-heading">
-                        <h4 class="panel-title">
-                          <a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo">
-                            Client Login 
-                          </a>
-                        </h4>
-                      </div>
-                      <div id="collapseTwo" class="panel-collapse collapse">
-                        <div class="panel-body">
-                          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quaerat voluptatibus modi pariatur qui reprehenderit asperiores fugiat deleniti praesentium enim incidunt.</p>
-                          <input type="text" placeholder="Username or email">
-                          <input type="password" placeholder="Password">
-                          <button type="submit" class="aa-browse-btn">Login</button>
-                          <label for="rememberme"><input type="checkbox" id="rememberme"> Remember me </label>
-                          <p class="aa-lost-password"><a href="#">Lost your password?</a></p>
-                        </div>
-                      </div>
-                    </div>
+
                     <!-- Billing Details -->
                     <div class="panel panel-default aa-checkout-billaddress">
                       <div class="panel-heading">
@@ -296,7 +299,9 @@
                     <label for="cashdelivery"><input type="radio" id="cashdelivery" name="optionsRadios"> Cash on Delivery </label>
                     <label for="paypal"><input type="radio" id="paypal" name="optionsRadios" checked> Via Paypal </label>
                     <img src="https://www.paypalobjects.com/webstatic/mktg/logo/AM_mc_vs_dc_ae.jpg" border="0" alt="PayPal Acceptance Mark">    
-                    <input type="submit" value="Place Order" class="aa-browse-btn">                
+
+                    <input type="submit" value="Place Order" class="aa-browse-btn" v-bind:class="{ disable: !$store.getters.isAuth }" @click.prevent="placeOrder">
+
                   </div>
                 </div>
               </div>
@@ -309,3 +314,58 @@
  </section>
  <!-- / Cart view section -->
 </template>
+
+<script>
+  import {eventBus} from './../../main.js'
+
+  export default{
+
+    created(){
+        eventBus.$on('showLoginError', (e)=>{
+            this.error = e;
+        })
+
+        eventBus.$on('loginAfterRegister', (registerInfo)=>{
+          this.login(registerInfo);
+        })
+    },
+
+    data() {
+        return {
+            auth:{
+                client_id: 2,
+                client_secret: 'ONo7VPjObuMmPxaBoWz9W8EHIzHl4fDsVdxEzpzg',
+                grant_type: 'password',
+                username: "destinee.williamson@example.org",
+                password: "secret",
+        scope: 'place-orders'
+            },
+            error: ""
+        }
+    },
+
+    methods: {
+      placeOrder(){
+          if(this.$store.getters.isAuth)
+            this.$store.dispatch('asyncPlaceOrder');
+      },
+
+      login(registerInfo){
+        this.$store.commit('setRedirectTo', '/checkout');
+          if(registerInfo !=null){
+              this.auth.username = registerInfo.email;
+              this.auth.password = registerInfo.password;        
+          }
+          this.$store.dispatch('asyncSetAuthUser', this.auth);
+      }
+    }
+  };
+</script>
+
+<style scoped>
+  .disable {
+    background-color: #f865668f !important;
+    border: 1px solid #f865668f;
+    color: #e3e3e3 !important;
+  }
+</style>

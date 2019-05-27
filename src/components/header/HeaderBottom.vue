@@ -21,7 +21,7 @@
                 <a class="aa-cart-link" href="#">
                   <span class="fa fa-shopping-basket"></span>
                   <span class="aa-cart-title">SHOPPING CART</span>
-                  <span class="aa-cart-notify" v-if="this.$store.getters.getprodCount>0">{{this.$store.getters.getprodCount}}</span>
+                  <span class="aa-cart-notify" v-if="this.$store.getters.getprodCount>0">{{ cartSize }}</span>
                 </a>
                 <div class="aa-cartbox-summary">
                   <ul>
@@ -65,6 +65,13 @@
 
 <script>
   export default{
+
+    computed:{
+      cartSize(){
+        return this.$store.getters.getCart.length;
+      }
+    },
+
     methods:{
       removeFromCart(product){
         this.$store.dispatch('removeProductFromCart',product);
