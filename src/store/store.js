@@ -104,6 +104,10 @@ export const store = new Vuex.Store({
 
 		resetRedirectTo(state){
 			state.redirectTo = '/';
+		},
+
+		setRedirectTo(state, payload){
+			state.redirectTo = payload.redirectTo;
 		}
 	},
 
@@ -210,6 +214,38 @@ export const store = new Vuex.Store({
 			})
 			.catch(err=>console.log(err));
 		},
+
+		// Place order
+		asyncPlaceOrder(context){
+			context.commit('setLoading');
+			let request = {
+				user_id: null,
+				order_items: []
+			};
+			request.user_id = context.state.authUser.id;
+			context.state.cart.forEach((item)=>{
+				request.order_items.push({
+					product_id: item.productId,
+                	qty : item.qty
+				})
+			})
+
+			Vue.axios.post('api/order', request, {
+				headers:{
+					Authorization: 'Bearer ' + Vue.auth.getToken(),
+				}
+			})
+			.then(res=>{
+				eventBus.showMessage(res.data);
+			},err=>{
+				eventBus.showError(err.data.status);
+			}).then(()=>{
+				context.state.cart = [];
+				//redirect to /checkout
+				router.push(this.state.redirectTo);
+				context.commit('unsetLoading');
+			});
+		}
 	}
 
 });

@@ -51,7 +51,8 @@
                   <li class="hidden-xs"><router-link to="/checkout">Checkout</router-link></li> <!---->
 
                   <li v-if="!$store.getters.isAuth"> <!---->
-                    <a href="" data-toggle="modal" data-target="#login-modal">Login</a>
+                    <!-- <a href="" data-toggle="modal" data-target="#login-modal">Login</a> -->
+                    <router-link to="/account">Login</router-link>
                   </li> 
 
                   <li v-else> <!---->

@@ -56,7 +56,7 @@
                    </tr>
                  </tbody>
                </table>
-               <router-link to="/checkout">
+               <router-link to="/checkout" v-if="$store.getters.getCart.length > 0">
                   <a href="" class="aa-cart-view-btn">Proced to Checkout</a> 
                </router-link>
              </div>
@@ -65,6 +65,7 @@
        </div>
      </div>
    </div>
+   <br><br>
  </section>
  <!-- / Cart view section -->
 </template>
@@ -78,7 +79,6 @@
     },
 
     methods:{
-
       addToCart(product,qty){
         product.qty=parseInt(qty);
         this.$store.dispatch('addProductToCart',product);
@@ -89,5 +89,5 @@
         this.$store.dispatch('removeProductFromCart',product);
       },
     },
-  }
+  };
 </script>

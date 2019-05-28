@@ -32,6 +32,7 @@
        </div>
      </div>
    </div>
+   <br><br>
  </section>
  <!-- / Cart view section -->
 </template>
