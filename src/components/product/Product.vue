@@ -4,7 +4,8 @@
 		<figure>
 		<!-- <a class="aa-product-img" href="#"><img :src="item.imgSrc" alt="polo shirt img"></a> -->
 		<router-link to="/product/102" class="aa-product-img">
-			<img :src="item.imgSrc" alt="polo shirt img">
+			<!-- <img :src="item.imgSrc" alt="polo shirt img"> -->
+			<img src="https://picsum.photos/300/300" alt="polo shirt img">
 		</router-link>
 		<a class="aa-add-card-btn" @click="addToCart(item,1)" ><span class="fa fa-shopping-cart"></span>Add To Cart</a>
 		 <figcaption>

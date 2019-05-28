@@ -1,6 +1,7 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
-import VuexPersistence from 'vuex-persist'
+// import VuexPersistence from 'vuex-persist'
+import VuexPersistence from 'vuex-persist/dist/umd'   //use this while doing $ npm run build (old version problem)
 import {router} from './../main.js';
 import {eventBus} from './../main.js'
 
@@ -15,7 +16,7 @@ export const store = new Vuex.Store({
 		wishlist:[],
 		loading: false,
 		redirectTo: "/",
-		category:{},
+		category:[],
 	},
 
 	plugins: [new VuexPersistence().plugin],
@@ -123,10 +124,7 @@ export const store = new Vuex.Store({
 							'Authorization': 'Bearer ' + Vue.auth.getToken()
 						}
 					}).then(res=>{
-						context.commit('setAuthUser', res.data);
-						// Redirect to requested page
-						router.push(this.state.redirectTo);	
-						context.commit('resetRedirectTo');
+						context.commit('setAuthUser', res.data);	
 					}, err=>{
 						eventBus.showLoginError(err.response.data);
 					});
@@ -135,6 +133,8 @@ export const store = new Vuex.Store({
 		            eventBus.showLoginError(err.response.data);
 	        	}).then(()=>{
 					context.commit('unsetLoading');
+					// if login done from "/account" route then redirect to home ( Else, stay in the current page)
+					if(router.currentRoute.path == "/account") router.push("/");
 				});
 		},
 
@@ -146,8 +146,6 @@ export const store = new Vuex.Store({
 				}
 			}).then(res=>{
 				context.commit('unsetAuthUser');
-				// Redirect to home
-				router.push('/');	
 			}, err=>{
 				eventBus.showError(err.response.data);
 			}).then(()=>{
@@ -205,10 +203,9 @@ export const store = new Vuex.Store({
 		},
 
 		fetchCategory(context){
-			fetch("http://localhost:8000/api/categories")
-			.then(res=>res.json())
+			Vue.axios.get("api/categories")
+			.then(res=>res.data)
 			.then(res=>{
-			  console.log('fetched');
 			  let payload=res.data;
 			  context.commit('fetchCategory',payload);
 			})
@@ -242,7 +239,7 @@ export const store = new Vuex.Store({
 			}).then(()=>{
 				context.state.cart = [];
 				//redirect to /checkout
-				router.push(this.state.redirectTo);
+				router.push("/");
 				context.commit('unsetLoading');
 			});
 		}
