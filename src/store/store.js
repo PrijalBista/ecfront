@@ -15,7 +15,6 @@ export const store = new Vuex.Store({
 		prodCount:0,
 		wishlist:[],
 		loading: false,
-		redirectTo: "/",
 		category:[],
 	},
 
@@ -101,14 +100,6 @@ export const store = new Vuex.Store({
 
 		unsetLoading(state){
 			state.loading = false;
-		},
-
-		resetRedirectTo(state){
-			state.redirectTo = '/';
-		},
-
-		setRedirectTo(state, payload){
-			state.redirectTo = payload.redirectTo;
 		}
 	},
 
