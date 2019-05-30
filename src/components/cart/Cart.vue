@@ -21,7 +21,7 @@
                     <tbody>
                       <!-- <cart-item v-for="item in this.$store.getters.getCart" v-bind:key="item.productId" :item="item"></cart-item> -->
                       <tr v-for="item in this.$store.getters.getCart" v-bind:key="item.productId">
-                        <td><a @click="removeFromCart(item)" class="remove" ><fa class="fa fa-close"></fa></a></td>
+                        <td><a @click="removeFromCart(item)" class="remove" ><i class="fa fa-close"></i></a></td>
                         <td><a href="#"><img src="src/assets/img/man/polo-shirt-1.png" alt="img"></a></td>
                         <td><a class="aa-cart-title" href="#">{{item.title}}</a></td>
                         <td>Nrs.{{item.price}}</td>
