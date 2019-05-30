@@ -125,6 +125,8 @@ export const store = new Vuex.Store({
 						}
 					}).then(res=>{
 						context.commit('setAuthUser', res.data);	
+						// if login done from "/account" route then redirect to home ( Else, stay in the current page)
+						if(router.currentRoute.path == "/account") router.push("/");					
 					}, err=>{
 						eventBus.showLoginError(err.response.data);
 					});
@@ -133,8 +135,6 @@ export const store = new Vuex.Store({
 		            eventBus.showLoginError(err.response.data);
 	        	}).then(()=>{
 					context.commit('unsetLoading');
-					// if login done from "/account" route then redirect to home ( Else, stay in the current page)
-					if(router.currentRoute.path == "/account") router.push("/");
 				});
 		},
 
