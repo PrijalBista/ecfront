@@ -1,8 +1,11 @@
 import axios from 'axios'
 
 export default function(Vue){
+
+    let baseurl =`http://127.0.0.1:8000/`;
+    
     Vue.axios = axios.create({
-        baseURL: `http://127.0.0.1:8000/`,
+        baseURL: baseurl,
         withCredentials: false,
         headers: {
             'Accept': 'application/json',

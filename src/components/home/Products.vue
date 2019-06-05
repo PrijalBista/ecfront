@@ -60,7 +60,7 @@
         },
 
         created(){
-            this.fetchProducts('http://localhost:8000/api/products');
+            this.fetchProducts();
         },
 
         components:{
@@ -68,9 +68,8 @@
         },  
 
         methods:{
-            fetchProducts(page_url){//fetching latest products
+            fetchProducts(page_url = '/api/products'){//fetching latest products
               let vm = this;
-              page_url = page_url || '/api/products'
             //   fetch(page_url)
             //     .then(res=>res.json())
             //     .then(res=>{
@@ -80,9 +79,9 @@
             //     .catch(err=>console.log(err));
 
                 this.$store.getters.getCategory.forEach(function(cat,index){  //fetching products for each category
-                    console.log(cat.category + "url : "+ page_url+"?category="+cat.id);
-                    fetch(page_url+"?category="+cat.id)
-                    .then(res=>res.json())
+                    // console.log(cat.category + "url : "+ page_url+"?category="+cat.id);
+                    vm.$axios.get(page_url+"?category="+cat.id)
+                    .then(res=>res.data)
                     .then(res=>{
                       vm.products.push({'category':cat.category, 'products':res.data});
                       //pagination milaunu paryo vane res.meta ra res.links ma xa

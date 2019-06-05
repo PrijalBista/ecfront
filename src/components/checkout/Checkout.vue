@@ -352,7 +352,6 @@
       },
 
       login(registerInfo){
-        this.$store.commit('setRedirectTo', '/checkout');
           if(registerInfo !=null){
               this.auth.username = registerInfo.email;
               this.auth.password = registerInfo.password;        

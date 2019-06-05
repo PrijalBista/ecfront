@@ -25,11 +25,11 @@
                 <!-- start currency -->
                 <div class="aa-currency">
                   <div class="dropdown">
-                    <a class="btn dropdown-toggle" href="#" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                    <a class="btn dropdown-toggle" href="#" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
                       <i class="fa fa-usd"></i>USD
                       <span class="caret"></span>
                     </a>
-                    <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                    <ul class="dropdown-menu" aria-labelledby="dropdownMenu2">
                       <li><a href="#"><i class="fa fa-euro"></i>EURO</a></li>
                       <li><a href="#"><i class="fa fa-jpy"></i>YEN</a></li>
                     </ul>
